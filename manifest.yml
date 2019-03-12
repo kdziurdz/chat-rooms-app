@@ -1,0 +1,10 @@
+---
+applications:
+  - name: sample_spring
+    path: target/chat-app-0.0.1-SNAPSHOT.war
+    memory: 768M
+    instances: 1
+    buildpacks:
+      - java_buildpack
+    services:
+      - sample-mongo
