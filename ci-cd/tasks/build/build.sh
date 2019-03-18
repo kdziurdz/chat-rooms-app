@@ -2,5 +2,5 @@
 
 cp -R app/* build/
 cd build
-npm clean package
+mvn clean package
 
