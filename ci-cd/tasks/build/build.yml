@@ -6,8 +6,6 @@ outputs:
   - name: build
 image_resource:
   type: docker-image
-  source:
-    repository: maven
-    tag: 3-jdk-8
+  source: {repository: maven, tag: 3.3.9-jdk-8}
 run:
   path: app/ci-cd/tasks/build/build.sh
