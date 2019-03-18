@@ -2,10 +2,8 @@
 platform: linux
 inputs:
   - name: app
-image_resource:
-  type: docker-image
+image_resourcetype: docker-image
   source:
-    repository: node
-    tag: '10'
+    repository: maven
 run:
   path: app/ci-cd/tasks/test/test.sh

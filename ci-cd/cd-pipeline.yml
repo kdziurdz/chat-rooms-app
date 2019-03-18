@@ -3,7 +3,7 @@ resources:
   - name: app
     type: git
     source:
-      uri: https://github.com/kdziurdz/chat-rooms-web
+      uri: https://github.com/kdziurdz/chat-rooms-app
       branch: master
 
   - name: deploy-web-app
