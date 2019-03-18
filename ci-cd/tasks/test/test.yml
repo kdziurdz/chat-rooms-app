@@ -4,6 +4,6 @@ inputs:
   - name: app
 image_resourcetype: docker-image
   source:
-    repository: maven
+    repository: _/maven
 run:
   path: app/ci-cd/tasks/test/test.sh

@@ -7,6 +7,6 @@ outputs:
 image_resource:
   type: docker-image
   source:
-    repository: maven
+    repository: _/maven
 run:
   path: app/ci-cd/tasks/build/build.sh
