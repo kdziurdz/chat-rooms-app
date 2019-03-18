@@ -4,6 +4,7 @@ inputs:
   - name: app
 image_resourcetype: docker-image
   source:
-    repository: _/maven
+    repository: java
+    tag: 8-jdk
 run:
   path: app/ci-cd/tasks/test/test.sh
