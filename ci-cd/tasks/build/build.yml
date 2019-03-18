@@ -1,0 +1,13 @@
+---
+platform: linux
+inputs:
+  - name: app
+outputs:
+  - name: build
+image_resource:
+  type: docker-image
+  source:
+    repository: maven
+    tag: "3.4"
+run:
+  path: app/ci-cd/tasks/build/build.sh

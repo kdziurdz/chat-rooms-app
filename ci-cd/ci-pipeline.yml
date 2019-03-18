@@ -1,0 +1,37 @@
+---
+resource_types:
+  - name: pull-request
+    type: docker-image
+    source:
+      repository: teliaoss/github-pr-resource
+
+resources:
+  - name: app
+    type: pull-request
+    check_every: 24h
+    webhook_token: 123abc
+    source:
+      repository: kdziurdz/chat-rooms-web
+      access_token: ((access_token))
+
+jobs:
+  - name: test
+    plan:
+      - get: app
+        trigger: true
+        version: every
+      - put: app
+        params:
+          path: app
+          status: pending
+      - task: unit-test
+        file: app/ci-cd/tasks/test/test.yml
+        on_failure:
+          put: app
+          params:
+            path: app
+            status: failure
+      - put: app
+        params:
+          path: app
+          status: success
