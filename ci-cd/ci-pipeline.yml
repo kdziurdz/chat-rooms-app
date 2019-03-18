@@ -9,9 +9,9 @@ resources:
   - name: app
     type: pull-request
     check_every: 24h
-    webhook_token: 123abc
+    webhook_token: 321bca
     source:
-      repository: kdziurdz/chat-rooms-web
+      repository: kdziurdz/chat-rooms-app
       access_token: ((access_token))
 
 jobs:
