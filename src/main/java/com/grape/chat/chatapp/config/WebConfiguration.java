@@ -8,6 +8,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class WebConfiguration implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**").allowedOrigins("https://cf-demo-react-busy-sable.cfapps.io/");
+        registry.addMapping("/**").allowedOrigins("*");
     }
 }
