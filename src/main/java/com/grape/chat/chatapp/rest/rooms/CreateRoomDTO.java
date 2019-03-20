@@ -1,4 +1,4 @@
-package com.grape.chat.chatapp.rest;
+package com.grape.chat.chatapp.rest.rooms;
 
 import javax.validation.constraints.NotBlank;
 
