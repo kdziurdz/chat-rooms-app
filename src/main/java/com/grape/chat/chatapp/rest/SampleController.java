@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController()
 @RequestMapping("api/1/sample")
-public class ExchangeRateSummaryController {
+public class SampleController {
 
     @GetMapping("/")
     public ResponseEntity<String> get() {

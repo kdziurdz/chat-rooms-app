@@ -1,4 +1,4 @@
-package com.grape.chat.chatapp.rest;
+package com.grape.chat.chatapp.rest.rooms;
 
 import com.grape.chat.chatapp.entity.Room;
 import com.grape.chat.chatapp.repository.RoomRepository;
