@@ -1,9 +1,9 @@
 package com.grape.chat.chatapp.rest.messages;
 
-import com.grape.chat.chatapp.entity.Customer;
-import com.grape.chat.chatapp.entity.Room;
-import com.grape.chat.chatapp.repository.CustomerRepository;
-import com.grape.chat.chatapp.repository.RoomRepository;
+import com.grape.chat.chatapp.entity.Message;
+import com.grape.chat.chatapp.repository.MessageRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,22 +14,22 @@ import java.util.List;
 @RestController()
 @RequestMapping("api/1/messages")
 public class MessageController {
-    private final CustomerRepository customerRepository;
+    private final MessageRepository messageRepository;
 
-    public MessageController(CustomerRepository customerRepository) {
-        this.customerRepository = customerRepository;
+    public MessageController(MessageRepository messageRepository) {
+        this.messageRepository = messageRepository;
     }
 
     @GetMapping("/")
-    public ResponseEntity<List<Customer>> get() {
+    public ResponseEntity<Page<Message>> get() {
 
-
-        return new ResponseEntity<>(customerRepository.findAll(), HttpStatus.OK);
+        Page<Message> all = messageRepository.findAll(PageRequest.of(0, 100));
+        return new ResponseEntity<>(all, HttpStatus.OK);
     }
     @PostMapping("/")
     public void create(@RequestBody @Valid CreateMessageDTO createMessageDTO) {
 
-        Customer customer = new Customer(createMessageDTO.getText(), "nazwisko");
-        customerRepository.save(customer);
+        Message message = new Message(createMessageDTO.getText());
+        messageRepository.save(message);
     }
 }

@@ -16,17 +16,11 @@
 
 package com.grape.chat.chatapp.repository;
 
-import com.grape.chat.chatapp.entity.Customer;
+import com.grape.chat.chatapp.entity.Message;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 
-import java.util.List;
-
-public interface CustomerRepository extends ElasticsearchRepository<Customer, String> {
-
-    Customer findByFirstName(String firstName);
-
-    List<Customer> findByLastName(String lastName);
-
-    List<Customer> findAll();
-
+public interface MessageRepository extends ElasticsearchRepository<Message, String> {
+    Page<Message> findAll(Pageable pageable);
 }
