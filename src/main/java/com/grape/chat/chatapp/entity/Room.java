@@ -4,13 +4,23 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.springframework.data.annotation.Id;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 public class Room {
     @Id
     private String id;
 
+    @NotBlank
     private String name;
 
-    private Boolean hasPassword;
+    @NotNull
+    private String passwordHash;
+
+    public Room(String name, String passwordHash) {
+        this.name = name;
+        this.passwordHash = passwordHash;
+    }
 
     public Room(String name) {
         this.name = name;
@@ -27,8 +37,8 @@ public class Room {
         return name;
     }
 
-    public Boolean getHasPassword() {
-        return hasPassword;
+    public String getPasswordHash() {
+        return passwordHash;
     }
 
     @Override
@@ -36,9 +46,11 @@ public class Room {
         return new org.apache.commons.lang3.builder.ToStringBuilder(this)
                 .append("id", id)
                 .append("name", name)
-                .append("hasPassword", hasPassword)
+                .append("passwordHash", passwordHash)
                 .toString();
     }
+
+
 
     @Override
     public boolean equals(Object o) {
@@ -51,7 +63,7 @@ public class Room {
         return new EqualsBuilder()
                 .append(id, room.id)
                 .append(name, room.name)
-                .append(hasPassword, room.hasPassword)
+                .append(passwordHash, room.passwordHash)
                 .isEquals();
     }
 
@@ -60,7 +72,7 @@ public class Room {
         return new HashCodeBuilder(17, 37)
                 .append(id)
                 .append(name)
-                .append(hasPassword)
+                .append(passwordHash)
                 .toHashCode();
     }
 }
