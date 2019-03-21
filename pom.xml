@@ -61,11 +61,11 @@
 
         <dependency>
             <groupId>com.github.vanroy</groupId>
-            <artifactId>spring-boot-starter-data-jest</artifactId>
+            <artifactId>spring-data-jest</artifactId>
             <version>3.2.1.RELEASE</version>
         </dependency>
 
-        <!-- Only required for start local ES node -->
+         <!--Only required for start local ES node-->
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-api</artifactId>
@@ -98,12 +98,6 @@
             <version>5.3.2</version>
             <scope>test</scope>
         </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
-        </dependency>
-
 
     </dependencies>
 
