@@ -9,5 +9,6 @@ public interface RoomRepository extends MongoRepository<Room, String> {
 
     public Room findByName(String firstName);
     public List<Room> findAll();
+    public List<Room> findAllByName(String name);
 
 }
