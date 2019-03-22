@@ -26,6 +26,14 @@ public class RoomDTO extends BaseRoom {
         this.hasPassword = hasPassword;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this)

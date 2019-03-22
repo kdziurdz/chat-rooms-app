@@ -1,4 +1,4 @@
-package com.grape.chat.chatapp.rest.rooms;
+package com.grape.chat.chatapp.web.rest.rooms;
 
 import com.grape.chat.chatapp.dto.rooms.CreateRoomDTO;
 import com.grape.chat.chatapp.dto.rooms.RoomDTO;

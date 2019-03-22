@@ -1,4 +1,4 @@
-package com.grape.chat.chatapp.rest.messages;
+package com.grape.chat.chatapp.web.rest.messages;
 
 import com.grape.chat.chatapp.entity.Message;
 import com.grape.chat.chatapp.repository.MessageRepository;
@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @RestController()
 @RequestMapping("api/1/messages")

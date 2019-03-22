@@ -1,4 +1,4 @@
-package com.grape.chat.chatapp.rest;
+package com.grape.chat.chatapp.web.rest;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

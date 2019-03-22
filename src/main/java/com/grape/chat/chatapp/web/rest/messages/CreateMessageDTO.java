@@ -1,4 +1,4 @@
-package com.grape.chat.chatapp.rest.messages;
+package com.grape.chat.chatapp.web.rest.messages;
 
 import javax.validation.constraints.NotBlank;
 
