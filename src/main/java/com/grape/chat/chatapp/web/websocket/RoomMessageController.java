@@ -1,18 +1,27 @@
 package com.grape.chat.chatapp.web.websocket;
 
 import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.util.HtmlUtils;
 
 @Controller
 public class RoomMessageController {
 
-    @MessageMapping("/hello")
-    @SendTo("/topic/greetings")
-    public Message greeting(Message message) throws Exception {
-        Thread.sleep(1000); // simulated delay
-        return new Message("CONNECTED TO TOPIC");
+    @MessageMapping("/message")
+    @SendTo("/topic/public")
+    public ChatMessage sendMessage(@Payload ChatMessage chatMessage) {
+        return chatMessage;
     }
+
+    @MessageMapping("/add-user")
+    @SendTo("/topic/public")
+    public ChatMessage addUser(@Payload ChatMessage chatMessage,
+                               SimpMessageHeaderAccessor headerAccessor) {
+        headerAccessor.getSessionAttributes().put("username", chatMessage.getSender());
+        return chatMessage;
+    }
+
 
 }
