@@ -1,37 +1,37 @@
 package com.grape.chat.chatapp.web.websocket;
 
-public class ChatMessage {
-    private MessageType type;
-    private String content;
-    private String sender;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
-    public enum MessageType {
-        CHAT,
-        JOIN,
-        LEAVE
+public class ChatMessage {
+    private Type type;
+    private MessageContent content;
+
+    public enum Type {
+        MESSAGE,
+        INIT
     }
 
-    public MessageType getType() {
+    public Type getType() {
         return type;
     }
 
-    public void setType(MessageType type) {
+    public void setType(Type type) {
         this.type = type;
     }
 
-    public String getContent() {
+    public MessageContent getContent() {
         return content;
     }
 
-    public void setContent(String content) {
+    public void setContent(MessageContent content) {
         this.content = content;
     }
 
-    public String getSender() {
-        return sender;
-    }
-
-    public void setSender(String sender) {
-        this.sender = sender;
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .append("type", type)
+                .append("content", content)
+                .toString();
     }
 }
