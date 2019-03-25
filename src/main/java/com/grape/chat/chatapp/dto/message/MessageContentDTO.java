@@ -1,18 +1,15 @@
-package com.grape.chat.chatapp.web.websocket;
+package com.grape.chat.chatapp.dto.message;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-public class MessageContent {
+public class MessageContentDTO {
     private String id;
     private String message;
     private String timestamp;
     private String authorName;
+    private String roomId;
 
-    private MessageContent(Builder builder) {
-        setId(builder.id);
-        setMessage(builder.message);
-        setTimestamp(builder.timestamp);
-        setAuthorName(builder.authorName);
+    public MessageContentDTO() {
     }
 
     public String getId() {
@@ -47,6 +44,14 @@ public class MessageContent {
         this.authorName = authorName;
     }
 
+    public String getRoomId() {
+        return roomId;
+    }
+
+    public void setRoomId(String roomId) {
+        this.roomId = roomId;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this)
@@ -54,40 +59,7 @@ public class MessageContent {
                 .append("message", message)
                 .append("timestamp", timestamp)
                 .append("authorName", authorName)
+                .append("roomId", roomId)
                 .toString();
-    }
-
-    public static final class Builder {
-        private String id;
-        private String message;
-        private String timestamp;
-        private String authorName;
-
-        public Builder() {
-        }
-
-        public Builder id(String val) {
-            id = val;
-            return this;
-        }
-
-        public Builder message(String val) {
-            message = val;
-            return this;
-        }
-
-        public Builder timestamp(String val) {
-            timestamp = val;
-            return this;
-        }
-
-        public Builder authorName(String val) {
-            authorName = val;
-            return this;
-        }
-
-        public MessageContent build() {
-            return new MessageContent(this);
-        }
     }
 }

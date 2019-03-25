@@ -1,7 +1,7 @@
 package com.grape.chat.chatapp.web.websocket;
 
-import com.grape.chat.chatapp.dto.message.ChatMessageDTO;
-import com.grape.chat.chatapp.dto.message.IncomingMessageDTO;
+import com.grape.chat.chatapp.dto.message.ChatMessageSnapshotDTO;
+import com.grape.chat.chatapp.dto.message.NewChatMessageDTO;
 import com.grape.chat.chatapp.service.MessageService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -41,10 +41,10 @@ class RoomMessageControllerTest {
         Map<String, Object> givenSessionAttrs = Collections.singletonMap("username", givenUsername);
         when(headerAccessor.getSessionAttributes()).thenReturn(givenSessionAttrs);
 
-        ChatMessageDTO returnedChatMessage = mock(ChatMessageDTO.class);
+        NewChatMessageDTO returnedChatMessage = mock(NewChatMessageDTO.class);
         when(messageService.create(givenText, roomId, givenUsername)).thenReturn(returnedChatMessage);
 
-        final ChatMessageDTO result = controller
+        final NewChatMessageDTO result = controller
                 .sendMessageToRoom(incomingMessage, roomId, headerAccessor);
 
         verify(headerAccessor, times(1)).getSessionAttributes();

@@ -16,19 +16,44 @@
 
 package com.grape.chat.chatapp.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.elasticsearch.search.DocValueFormat;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.elasticsearch.annotations.DateFormat;
 import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.Field;
+import org.springframework.data.elasticsearch.annotations.FieldType;
 
-@Document(indexName = "message", type = "message", shards = 1, replicas = 0, refreshInterval = "-1")
+import java.time.LocalDateTime;
+import java.util.Date;
+
+@Document(indexName = "message", type = "message")
 public class Message {
 
     @Id
     private String id;
     private String message;
-    private String timestamp;
+
+    // @Field(type = FieldType.Date, format = DateFormat.basic_date_time, store = true)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+    private LocalDateTime timestamp = LocalDateTime.now();
+
     private String authorName;
     private String roomId;
+
+    public Message(String message, String authorName, String roomId) {
+        this.message = message;
+        this.authorName = authorName;
+        this.roomId = roomId;
+    }
+
+    public Message() {
+    }
 
     public String getId() {
         return id;
@@ -46,11 +71,11 @@ public class Message {
         this.message = message;
     }
 
-    public String getTimestamp() {
+    public LocalDateTime getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(String timestamp) {
+    public void setTimestamp(LocalDateTime timestamp) {
         this.timestamp = timestamp;
     }
 
@@ -68,6 +93,34 @@ public class Message {
 
     public void setRoomId(String roomId) {
         this.roomId = roomId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Message message1 = (Message) o;
+
+        return new EqualsBuilder()
+                .append(id, message1.id)
+                .append(message, message1.message)
+                .append(timestamp, message1.timestamp)
+                .append(authorName, message1.authorName)
+                .append(roomId, message1.roomId)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37)
+                .append(id)
+                .append(message)
+                .append(timestamp)
+                .append(authorName)
+                .append(roomId)
+                .toHashCode();
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.grape.chat.chatapp.dto.message;
+package com.grape.chat.chatapp.web.websocket;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 

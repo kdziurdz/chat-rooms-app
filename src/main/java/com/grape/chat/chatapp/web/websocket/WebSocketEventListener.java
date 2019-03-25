@@ -1,14 +1,16 @@
 package com.grape.chat.chatapp.web.websocket;
 
+import com.grape.chat.chatapp.dto.message.ChatMessageParticipantsDTO;
+import com.grape.chat.chatapp.dto.message.ChatMessageSnapshotDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
-import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.messaging.SessionConnectedEvent;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
+import org.springframework.web.socket.messaging.SessionSubscribeEvent;
 
 @Component
 public class WebSocketEventListener {
@@ -23,6 +25,16 @@ public class WebSocketEventListener {
     }
 
     @EventListener
+    public void handleWebSocketConnectListener(SessionSubscribeEvent event) {
+        final Object topic = event.getMessage().getHeaders().get("simpDestination").toString();
+
+        // do wszystkich, że nowy subskryber new ChatMessageParticipantsDTO()
+        // do jednego INIT
+
+        logger.info("NEW SUBSCRIPTION!!!!");
+    }
+
+    @EventListener
     public void handleWebSocketDisconnectListener(SessionDisconnectEvent event) {
 //        StompHeaderAccessor headerAccessor = StompHeaderAccessor.wrap(event.getMessage());
 //
@@ -30,8 +42,8 @@ public class WebSocketEventListener {
 //        if (username != null) {
 //            logger.info("User Disconnected : " + username);
 //
-//            ChatMessageDTO chatMessage = new ChatMessageDTO();
-//            chatMessage.setType(ChatMessageDTO.Type.LEAVE);
+//            ChatMessageSnapshotDTO chatMessage = new ChatMessageSnapshotDTO();
+//            chatMessage.setType(ChatMessageSnapshotDTO.Type.LEAVE);
 //            chatMessage.setSender(username);
 //
 //            messagingTemplate.convertAndSend("/topic/public", chatMessage);
