@@ -1,8 +1,9 @@
-package com.grape.chat.chatapp.web.websocket;
+package com.grape.chat.chatapp.dto.message;
 
+import com.grape.chat.chatapp.web.websocket.MessageContent;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-public class ChatMessage {
+public class ChatMessageDTO {
     private Type type;
     private MessageContent content;
 

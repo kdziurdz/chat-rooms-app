@@ -1,5 +1,8 @@
 package com.grape.chat.chatapp.web.websocket;
 
+import com.grape.chat.chatapp.dto.message.ChatMessageDTO;
+import com.grape.chat.chatapp.dto.message.IncomingMessageDTO;
+import com.grape.chat.chatapp.service.MessageService;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
@@ -8,57 +11,34 @@ import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.stereotype.Controller;
 
 import java.time.Instant;
+import java.util.Map;
 
 @Controller
 public class RoomMessageController {
+    private final MessageService messageService;
 
-    @MessageMapping("/message")
-    @SendTo("/topic/public")
-    public ChatMessage sendMessage(@Payload IncomingMessage incomingMessage,
-                                   SimpMessageHeaderAccessor headerAccessor) {
-        return getChatMessage(incomingMessage, headerAccessor);
+    public RoomMessageController(MessageService messageService) {
+        this.messageService = messageService;
     }
-
-    @MessageMapping("/add-user")
-    @SendTo("/topic/public")
-    public void addUser(@Payload IncomingMessage incomingMessage, // TODO broadcast user added
-                        SimpMessageHeaderAccessor headerAccessor) {
-        headerAccessor.getSessionAttributes().put("username", incomingMessage.getPlainText());
-        // return chatMessage;
-    }
-
-    ////////////////////////////////////////////////////////////
-
 
     @MessageMapping("/topic/room.{roomId}.message")
     @SendTo("/topic/room.{roomId}")
-    public ChatMessage sendMessageToRoom(@Payload IncomingMessage incomingMessage,
-                                         @DestinationVariable String roomId,
-                                   SimpMessageHeaderAccessor headerAccessor) {
-        return getChatMessage(incomingMessage, headerAccessor);
-    }
+    public ChatMessageDTO sendMessageToRoom(@Payload IncomingMessageDTO incomingMessage,
+                                            @DestinationVariable String roomId,
+                                            SimpMessageHeaderAccessor headerAccessor) {
 
-    private ChatMessage getChatMessage(@Payload IncomingMessage incomingMessage, SimpMessageHeaderAccessor headerAccessor) {
-        final ChatMessage chatMessage = new ChatMessage();
-        chatMessage.setType(ChatMessage.Type.MESSAGE);
-        chatMessage.setContent(new MessageContent.Builder()
-                .authorName(headerAccessor.getSessionAttributes()
-                        .get("username").toString())
-                .id(headerAccessor.getSessionId())
-                .message(incomingMessage.getPlainText())
-                .timestamp(Instant.now().toString())
-                .build()
-        );
-        return chatMessage;
+        return messageService.create(incomingMessage.getPlainText(), roomId,
+                headerAccessor.getSessionAttributes().get("username").toString());
     }
 
     @MessageMapping("/topic/room.{roomId}.addUser")
     @SendTo("/topic/room.{roomId}")  // TODO broadcast user added
-    public void addUsertoRoom(@Payload IncomingMessage incomingMessage,
+    public void addUserToRoom(@Payload IncomingMessageDTO incomingMessage,
                               @DestinationVariable String roomId,
                               SimpMessageHeaderAccessor headerAccessor) {
-        headerAccessor.getSessionAttributes().put("username", incomingMessage.getPlainText());
-        // return chatMessage;
+        final Map<String, Object> sessionAttributes = headerAccessor.getSessionAttributes();
+        sessionAttributes.put("username", incomingMessage.getPlainText());
+        sessionAttributes.put("roomId", roomId);
     }
 
 

@@ -25,10 +25,4 @@ public class MessageController {
         Page<Message> all = messageRepository.findAll(PageRequest.of(0, 100));
         return new ResponseEntity<>(all, HttpStatus.OK);
     }
-    @PostMapping("/")
-    public void create(@RequestBody @Valid CreateMessageDTO createMessageDTO) {
-
-        Message message = new Message(createMessageDTO.getText());
-        messageRepository.save(message);
-    }
 }
