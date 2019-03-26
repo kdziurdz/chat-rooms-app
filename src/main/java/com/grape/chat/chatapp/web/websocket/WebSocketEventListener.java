@@ -1,7 +1,5 @@
 package com.grape.chat.chatapp.web.websocket;
 
-import com.grape.chat.chatapp.dto.message.ChatMessageParticipantsDTO;
-import com.grape.chat.chatapp.dto.message.ChatMessageSnapshotDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
