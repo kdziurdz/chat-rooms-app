@@ -33,27 +33,27 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
             return;
         }
 
-        UsernamePasswordAuthenticationToken authentication = getAuthentication(req);
+        String token = req.getHeader(HEADER_STRING);
+        UsernamePasswordAuthenticationToken authentication = token != null
+                ? getAuthentication(token)
+                : null;
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
         chain.doFilter(req, res);
     }
 
-    private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request) {
-        String token = request.getHeader(HEADER_STRING);
-        if (token != null) {
-            // parse the token.
-            String user = Jwts.parser()
-                    .setSigningKey(SecurityConstants.SECRET.getBytes())
-                    .parseClaimsJws(token.replace(TOKEN_PREFIX, ""))
-                    .getBody()
-                    .getSubject();
+    private UsernamePasswordAuthenticationToken getAuthentication(String token) {
+        // parse the token.
+        String user = Jwts.parser()
+                .setSigningKey(SecurityConstants.SECRET.getBytes())
+                .parseClaimsJws(token.replace(TOKEN_PREFIX, ""))
+                .getBody()
+                .getSubject();
 
-            if (user != null) {
-                return new UsernamePasswordAuthenticationToken(user, null, new ArrayList<>());
-            }
+        if (user != null) {
+            return new UsernamePasswordAuthenticationToken(user, null, new ArrayList<>());
+        } else {
             return null;
         }
-        return null;
     }
 }
